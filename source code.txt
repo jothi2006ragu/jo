@@ -1,0 +1,49 @@
+﻿def calculate_green_times(vehicle_counts, total_cycle=120):
+    """
+    Calculate green light durations for each direction based on vehicle counts.
+
+
+    Args:
+    vehicle_counts (dict): Number of vehicles at each direction.
+    total_cycle (int): Total duration of one traffic cycle in seconds.
+
+
+    Returns:
+    dict: Green light durations per direction.
+    """
+    total_vehicles = sum(vehicle_counts.values())
+
+
+    if total_vehicles == 0:
+        # No vehicles, divide time equally
+        return {dir: total_cycle // 4 for dir in vehicle_counts}
+
+
+    green_times = {}
+    for direction, count in vehicle_counts.items():
+        proportion = count / total_vehicles
+        green_times[direction] = round(proportion * total_cycle)
+
+
+    return green_times
+
+
+
+
+# --- Sample Input ---
+vehicle_data = {
+    "North": 10,
+    "South": 30,
+    "East": 20,
+    "West": 40
+}
+
+
+# --- Run the controller ---
+green_light_durations = calculate_green_times(vehicle_data)
+
+
+# --- Output ---
+print("Green Light Timings (in seconds):")
+for direction, time in green_light_durations.items():
+    print(f"{direction}: {time} sec")
